@@ -1,0 +1,80 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Post {
+  id String @id @default(cuid())
+  title String
+  body String
+}
+model Tweet {
+  id        Int          @id @default(autoincrement())
+  createdAt DateTime     @default(now())
+  content   String?
+  likes     LikedTweet[]
+  author    User?        @relation(fields: [authorId], references: [id])
+  authorId  Int?
+  comments  Comment[]
+}
+
+model User {
+  id         Int          @id @default(autoincrement())
+  email      String       @unique
+  password   String       @default("")
+  name       String?
+  tweets     Tweet[]
+  Profile    Profile?
+  likedTweet LikedTweet[]
+  comments   Comment[]
+  Following  Following[]
+}
+
+model LikedTweet {
+  id      Int      @id @default(autoincrement())
+  tweet   Tweet    @relation(fields: [tweetId], references: [id])
+  likedAt DateTime @default(now())
+  userId  Int?
+  User    User?    @relation(fields: [userId], references: [id])
+  tweetId Int
+}
+
+model Following {
+  id       Int    @id @default(autoincrement())
+  name     String
+  avatar   String
+  followId Int
+  User     User?  @relation(fields: [userId], references: [id])
+  userId   Int?
+}
+
+model Profile {
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  bio       String?
+  location  String?
+  website   String?
+  avatar    String?
+  userId    Int?     @unique
+  User      User?    @relation(fields: [userId], references: [id])
+}
+
+model Comment {
+  id        Int       @id @default(autoincrement())
+  createdAt DateTime  @default(now())
+  content   String?
+  Tweet     Tweet?    @relation(fields: [tweetId], references: [id])
+  tweetId   Int?
+  User      User?     @relation(fields: [userId], references: [id])
+  userId    Int?
+  comments  Comment[] @relation("CommentToComment")
+  Comment   Comment?  @relation("CommentToComment", fields: [commentId], references: [id])
+  commentId Int?
+}
