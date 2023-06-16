@@ -8,7 +8,7 @@
     "build": "tsc"
   },
   "dependencies": {
-    "@prisma/client": "^4.5.0",
+    "@prisma/client": "^4.15.0",
     "apollo-server": "^3.3.0",
     "bcrypt": "^5.1.0",
     "graphql": "^15.5.3",
@@ -17,6 +17,7 @@
     "nexus": "^1.1.0"
   },
   "devDependencies": {
+    "prisma": "^4.15.0",
     "ts-node-dev": "^1.1.8",
     "typescript": "^4.4.2"
   }
