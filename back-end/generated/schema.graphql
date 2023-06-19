@@ -31,13 +31,14 @@ type Profile {
 }
 
 type Query {
-  me: Profile
+  me: User
   post(id: ID): Post
   posts: [Post]
   users: [User]
 }
 
 type User {
+  Profile: [Profile]
   email: String
   id: ID
   name: String

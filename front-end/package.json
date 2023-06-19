@@ -12,6 +12,7 @@
     "@types/react": "^18.0.0",
     "@types/react-dom": "^18.0.0",
     "apollo-link-context": "^1.0.20",
+    "font-awesome": "^4.7.0",
     "formik": "^2.4.1",
     "graphql": "^16.6.0",
     "react": "^18.2.0",

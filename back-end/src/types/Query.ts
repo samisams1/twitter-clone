@@ -19,18 +19,16 @@ export const Query = queryType({
           })
         },
       })
-     t.field("me", {
-			type: "Profile",
-			//nullable: true,
-			resolve: (_parent, {id}, ctx) => {
-				//const userId = getUserId(ctx)
-				return prisma.profile.findFirst({
-          where:{
-            id:id
-          }
-        });
-			}
-		})
+      t.field("me", {
+        type: "User",
+        resolve: (_parent, args, ctx) => {
+          return prisma.user.findUnique({
+            where: {
+              id: 1,
+            },
+          })
+        },
+      }),
      t.list.field("users", {
 			type: "User",
 			resolve: (parent, args, ctx) => {

@@ -1,19 +1,20 @@
-import { useMutation } from "@apollo/client"
+import { useMutation, useQuery } from "@apollo/client"
 import { ErrorMessage, Field, Form, Formik } from "formik"
 import gql from "graphql-tag"
-import React, { useState } from "react"
+import React, { useRef, useState } from "react"
 import Modal from "react-modal"
 import { ME_QUERY } from "../pages/Profile"
-import { customStyles } from "../styles/customStyles"
-
-const CREATE_PROFILE_MUTATION = gql`
-  mutation createProfile(
+import { customStyles } from  "../styles/CustomModalStyles";
+const UPDATE_PROFILE = gql`
+  mutation updateProfile(
+    $id: Int!
     $bio: String
     $location: String
     $website: String
     $avatar: String
   ) {
-    createProfile(
+    updateProfile(
+      id: $id
       bio: $bio
       location: $location
       website: $website
@@ -25,6 +26,7 @@ const CREATE_PROFILE_MUTATION = gql`
 `
 
 interface ProfileValues {
+  id: number
   bio: string
   location: string
   website: string
@@ -32,43 +34,103 @@ interface ProfileValues {
 }
 
 function UpdateProfile() {
-  const [createProfile] = useMutation(CREATE_PROFILE_MUTATION, {
+  //const inputFile = useRef<HTMLInputElement | null>(null)
+  const inputFile = useRef<HTMLHeadingElement>(null);
+
+  const [image, setImage] = useState("")
+  const [imageLoading, setImageLoading] = useState(false)
+
+  const { loading, error, data } = useQuery(ME_QUERY)
+
+  const [updateProfile] = useMutation(UPDATE_PROFILE, {
     refetchQueries: [{ query: ME_QUERY }],
   })
-  const [modalIsOpon, setIsOpen] = useState(false)
+  const [modalIsOpen, setIsOpen] = useState(false)
 
+  if (loading) return <p>Loading...</p>
+  if (error) return <p>{error.message}</p>
   const initialValues: ProfileValues = {
-    bio: "",
-    location: "",
-    website: "",
-    avatar: "",
+    id: data.me.Profile.id,
+    bio: data.me.Profile.bio,
+    location: data.me.Profile.location,
+    website: data.me.Profile.website,
+    avatar: data.me.Profile.avatar,
   }
 
   const openModal = () => {
     setIsOpen(true)
   }
+
   const closeModal = () => {
     setIsOpen(false)
+  }
+
+  const uploadImage = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const files = e.target.files
+    const data = new FormData()
+   // data.append("file", files[0])
+    data.append("upload_preset", "darwin")
+    setImageLoading(true)
+    const res = await fetch('LxBpCuLO1PgLh5YAV7g_fNwVnLs', {
+      method: "POST",
+      body: data,
+    })
+    const file = await res.json()
+
+    setImage(file.secure_url)
+    setImageLoading(false)
   }
 
   return (
     <div>
       <button onClick={openModal} className="edit-button">
-        Create Profile
+        Edit Profile
       </button>
       <Modal
-        isOpen={modalIsOpon}
+        isOpen={modalIsOpen}
         onRequestClose={closeModal}
         contentLabel="Modal"
         style={customStyles}
       >
+        <input
+          type="file"
+          name="file"
+          placeholder="Upload an image"
+          onChange={uploadImage}
+         // ref={inputFile}
+          style={{ display: "none" }}
+        />
+        {imageLoading ? (
+          <h3>Loading...</h3>
+        ) : (
+          <>
+            {image ? (
+              <span>
+                <img
+                  src={image}
+                  style={{ width: "150px", borderRadius: "50%" }}
+                  alt="avatar"
+                 // onClick={}
+                />
+              </span>
+            ) : (
+              <span>
+                <i
+                  className="fa fa-user fa-5x"
+                  aria-hidden="true"
+                  //onClick={() => inputFile.current.click()}
+                ></i>
+              </span>
+            )}
+          </>
+        )}
         <Formik
           initialValues={initialValues}
           // validationSchema={validationSchema}
           onSubmit={async (values, { setSubmitting }) => {
             setSubmitting(true)
-            await createProfile({
-              variables: values,
+            await updateProfile({
+              variables: { ...values, avatar: image },
             })
 
             setSubmitting(false)
@@ -78,13 +140,14 @@ function UpdateProfile() {
           <Form>
             <Field name="bio" type="text" as="textarea" placeholder="Bio" />
             <ErrorMessage name="bio" component={"div"} />
-            <Field name="location" type="location" placeholder="Location" />
+
+            <Field name="location" type="text" placeholder="Location" />
             <ErrorMessage name="location" component={"div"} />
-            <Field name="website" type="website" placeholder="Website" />
+            <Field name="website" type="text" placeholder="Website" />
             <ErrorMessage name="website" component={"div"} />
 
             <button type="submit" className="login-button">
-              <span>Create Profile</span>
+              <span>Update Profile</span>
             </button>
           </Form>
         </Formik>
@@ -92,5 +155,5 @@ function UpdateProfile() {
     </div>
   )
 }
- 
-export default UpdateProfile ;
+
+export default UpdateProfile

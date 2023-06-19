@@ -7,7 +7,12 @@
 
 
 
-
+declare global {
+  interface NexusGenCustomOutputProperties<TypeName extends string> {
+    model: NexusPrisma<TypeName, 'model'>
+    crud: any
+  }
+}
 
 declare global {
   interface NexusGen extends NexusGenTypes {}
@@ -89,12 +94,13 @@ export interface NexusGenFieldTypes {
     website: string | null; // String
   }
   Query: { // field return type
-    me: NexusGenRootTypes['Profile'] | null; // Profile
+    me: NexusGenRootTypes['User'] | null; // User
     post: NexusGenRootTypes['Post'] | null; // Post
     posts: Array<NexusGenRootTypes['Post'] | null> | null; // [Post]
     users: Array<NexusGenRootTypes['User'] | null> | null; // [User]
   }
   User: { // field return type
+    Profile: Array<NexusGenRootTypes['Profile'] | null> | null; // [Profile]
     email: string | null; // String
     id: string | null; // ID
     name: string | null; // String
@@ -127,12 +133,13 @@ export interface NexusGenFieldTypeNames {
     website: 'String'
   }
   Query: { // field return type name
-    me: 'Profile'
+    me: 'User'
     post: 'Post'
     posts: 'Post'
     users: 'User'
   }
   User: { // field return type name
+    Profile: 'Profile'
     email: 'String'
     id: 'ID'
     name: 'String'

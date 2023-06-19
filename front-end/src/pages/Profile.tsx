@@ -11,23 +11,26 @@ import "../styles/primary.css"
 import "../styles/profile.css"
 
 export const ME_QUERY = gql`
-  query profiles {
-    me {
-      id
+query{
+  me {
+    id
+    name
+    Profile {
       bio
-      avatar
       website
-      
-     }
+      avatar
+    }
   }
+}
 `
 
 function Profile() {
-  const navigate = useNavigate();
+  const history = useNavigate()
   const { loading, error, data } = useQuery(ME_QUERY)
 
   if (loading) return <p>Loading...</p>
   if (error) return <p>{error.message}</p>
+  console.log(data.me.Profile[0].avatar);
   return (
     <>
       <div className="primary">
@@ -37,7 +40,7 @@ function Profile() {
         <div className="profile">
           <div className="profile-info">
             <div className="profile-head">
-              <span className="back-arrow" onClick={() => navigate('/')}>
+              <span className="back-arrow" onClick={() => history('/')}>
                 <i className="fa fa-arrow-left" aria-hidden="true"></i>
               </span>
               <span className="nickname">
@@ -45,9 +48,9 @@ function Profile() {
               </span>
             </div>
             <div className="avatar">
-              {data.me.Profile?.avatar ? (
+              {data.me.Profile ? (
                 <img
-                  src={data.me.Profile.avatar}
+                  src={require('../assets/download.jpeg')}
                   style={{ width: "150px", borderRadius: "50%" }}
                   alt="avatar"
                 />
@@ -65,10 +68,10 @@ function Profile() {
               <p>
                 <i className="fas fa-link"> </i>{" "}
                 <Link
-                  to={{ pathname: `http://${data.me.Profile.website}` }}
+                  to={{ pathname: `http://${data.me.Profile[0].website}` }}
                   target="_blank"
                 >
-                  {data.me.Profile.website}
+                  {data.me.Profile[0].website}
                 </Link>
               </p>
             ) : null}
