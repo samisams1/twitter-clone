@@ -3,6 +3,7 @@ import {BrowserRouter, Routes, Route} from "react-router-dom"
 import IsAuthenticated from "./components/IsAuthenticated";
 import Landing from "./components/Landing";
 import Users from "./components/Users";
+import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Profile from "./pages/Profile";
 import Signup from "./pages/Signup";
@@ -11,7 +12,7 @@ const RoutePage=()=>{
 <>
  <BrowserRouter>
     <Routes>
-        <Route element={<Landing/>} path="/" />
+        <Route element={<Home/>} path="/" />
        
         <Route element={<Login/>} path="/login" />
         <Route element={<Signup/>} path="/signup" />
