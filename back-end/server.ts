@@ -1,11 +1,11 @@
 import { ApolloServer } from "apollo-server";
 import { makeSchema } from "nexus";
-import { Mutation, Post, Query, User } from "./src/types";
+import { Comment, Following, LikedTweet, Mutation, Post, Query, Tweet, User } from "./src/types";
 import { AuthPayload } from "./src/types/AuthPayload";
 import { Profile } from "./src/types/Profile";
 import { nexusSchemaPrisma } from 'nexus-plugin-prisma/schema';
 const schema =makeSchema({
-    types:[Query,Post,Profile,AuthPayload,User, Mutation],
+    types:[Query,Post,Profile,AuthPayload,User, Mutation,Comment,Tweet,Following,LikedTweet],
     plugins: [nexusSchemaPrisma()],
     outputs:{
         schema:`${__dirname}/generated/schema.graphql`,

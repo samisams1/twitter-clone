@@ -14,7 +14,7 @@ export const Query = queryType({
         resolve: (_parent, { id }, ctx) => {
           return prisma.post.findFirst({
             where: {
-              id: id,
+              id: String(id)
             },
           })
         },
@@ -35,7 +35,37 @@ export const Query = queryType({
 				return prisma.user.findMany()
 			}
 		})
-    
+    t.list.field("tweets", {
+			type: "Tweet",
+			resolve: (_parent, args, ctx) => {
+				return prisma.tweet.findMany()
+			}
+		})
+
+		t.field("tweet", {
+			type: "Tweet",
+			//nullable: true,
+			//args: { id: intArg() },
+			resolve: (parent, { id }, ctx) => {
+				return prisma.tweet.findFirst({
+					where: {
+						id: Number(id)
+					}
+				})
+			}
+		})
+		t.field("user", {
+			type: "User",
+		//	nullable: true,
+			//args: { id: intArg() },
+			resolve: (parent, { id }, ctx) => {
+				return prisma.user.findFirst({
+					where: {
+						id: Number(1)
+					}
+				})
+			}
+		})
     },
     
     });

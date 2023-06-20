@@ -37,6 +37,18 @@ export interface NexusGenObjects {
     token?: string | null; // String
     user?: NexusGenRootTypes['User'] | null; // User
   }
+  Comment: { // root type
+    content?: string | null; // String
+    id?: string | null; // ID
+  }
+  Following: { // root type
+    avator?: string | null; // String
+    id?: string | null; // ID
+    name?: string | null; // String
+  }
+  LikedTweet: { // root type
+    id?: string | null; // ID
+  }
   Mutation: {};
   Post: { // root type
     body?: string | null; // String
@@ -51,6 +63,10 @@ export interface NexusGenObjects {
     website?: string | null; // String
   }
   Query: {};
+  Tweet: { // root type
+    content?: string | null; // String
+    id?: string | null; // ID
+  }
   User: { // root type
     email?: string | null; // String
     id?: string | null; // ID
@@ -73,13 +89,36 @@ export interface NexusGenFieldTypes {
     token: string | null; // String
     user: NexusGenRootTypes['User'] | null; // User
   }
+  Comment: { // field return type
+    User: Array<NexusGenRootTypes['User'] | null> | null; // [User]
+    content: string | null; // String
+    id: string | null; // ID
+  }
+  Following: { // field return type
+    Following: Array<NexusGenRootTypes['Following'] | null> | null; // [Following]
+    avator: string | null; // String
+    id: string | null; // ID
+    name: string | null; // String
+  }
+  LikedTweet: { // field return type
+    Tweet: Array<NexusGenRootTypes['Tweet'] | null> | null; // [Tweet]
+    id: string | null; // ID
+  }
   Mutation: { // field return type
+    createComment: NexusGenRootTypes['Comment'] | null; // Comment
     createDraft: NexusGenRootTypes['Post'] | null; // Post
     createProfile: NexusGenRootTypes['Profile'] | null; // Profile
+    createReply: NexusGenRootTypes['Comment'] | null; // Comment
+    createTweet: NexusGenRootTypes['Tweet'] | null; // Tweet
+    deleteFollow: NexusGenRootTypes['Following'] | null; // Following
+    deleteLike: NexusGenRootTypes['LikedTweet'] | null; // LikedTweet
     deletePost: NexusGenRootTypes['Post'] | null; // Post
+    follow: NexusGenRootTypes['Following'] | null; // Following
+    likeTweet: NexusGenRootTypes['LikedTweet'] | null; // LikedTweet
     login: NexusGenRootTypes['AuthPayload'] | null; // AuthPayload
     signup: NexusGenRootTypes['AuthPayload'] | null; // AuthPayload
     updatePost: NexusGenRootTypes['Post'] | null; // Post
+    updateProfile: NexusGenRootTypes['Profile'] | null; // Profile
   }
   Post: { // field return type
     body: string | null; // String
@@ -97,10 +136,22 @@ export interface NexusGenFieldTypes {
     me: NexusGenRootTypes['User'] | null; // User
     post: NexusGenRootTypes['Post'] | null; // Post
     posts: Array<NexusGenRootTypes['Post'] | null> | null; // [Post]
+    tweet: NexusGenRootTypes['Tweet'] | null; // Tweet
+    tweets: Array<NexusGenRootTypes['Tweet'] | null> | null; // [Tweet]
+    user: NexusGenRootTypes['User'] | null; // User
     users: Array<NexusGenRootTypes['User'] | null> | null; // [User]
   }
+  Tweet: { // field return type
+    LikedTweet: Array<NexusGenRootTypes['LikedTweet'] | null> | null; // [LikedTweet]
+    content: string | null; // String
+    id: string | null; // ID
+  }
   User: { // field return type
+    Comment: Array<NexusGenRootTypes['Comment'] | null> | null; // [Comment]
+    Following: Array<NexusGenRootTypes['Following'] | null> | null; // [Following]
+    LikedTweet: Array<NexusGenRootTypes['LikedTweet'] | null> | null; // [LikedTweet]
     Profile: Array<NexusGenRootTypes['Profile'] | null> | null; // [Profile]
+    Tweet: Array<NexusGenRootTypes['Tweet'] | null> | null; // [Tweet]
     email: string | null; // String
     id: string | null; // ID
     name: string | null; // String
@@ -112,13 +163,36 @@ export interface NexusGenFieldTypeNames {
     token: 'String'
     user: 'User'
   }
+  Comment: { // field return type name
+    User: 'User'
+    content: 'String'
+    id: 'ID'
+  }
+  Following: { // field return type name
+    Following: 'Following'
+    avator: 'String'
+    id: 'ID'
+    name: 'String'
+  }
+  LikedTweet: { // field return type name
+    Tweet: 'Tweet'
+    id: 'ID'
+  }
   Mutation: { // field return type name
+    createComment: 'Comment'
     createDraft: 'Post'
     createProfile: 'Profile'
+    createReply: 'Comment'
+    createTweet: 'Tweet'
+    deleteFollow: 'Following'
+    deleteLike: 'LikedTweet'
     deletePost: 'Post'
+    follow: 'Following'
+    likeTweet: 'LikedTweet'
     login: 'AuthPayload'
     signup: 'AuthPayload'
     updatePost: 'Post'
+    updateProfile: 'Profile'
   }
   Post: { // field return type name
     body: 'String'
@@ -136,10 +210,22 @@ export interface NexusGenFieldTypeNames {
     me: 'User'
     post: 'Post'
     posts: 'Post'
+    tweet: 'Tweet'
+    tweets: 'Tweet'
+    user: 'User'
     users: 'User'
   }
+  Tweet: { // field return type name
+    LikedTweet: 'LikedTweet'
+    content: 'String'
+    id: 'ID'
+  }
   User: { // field return type name
+    Comment: 'Comment'
+    Following: 'Following'
+    LikedTweet: 'LikedTweet'
     Profile: 'Profile'
+    Tweet: 'Tweet'
     email: 'String'
     id: 'ID'
     name: 'String'
@@ -158,6 +244,9 @@ export interface NexusGenArgTypes {
       location?: string | null; // String
       website?: string | null; // String
     }
+    createTweet: { // args
+      content?: string | null; // String
+    }
     deletePost: { // args
       id?: string | null; // String
     }
@@ -172,6 +261,12 @@ export interface NexusGenArgTypes {
     }
     updatePost: { // args
       id?: string | null; // String
+    }
+    updateProfile: { // args
+      avatar?: string | null; // String
+      bio?: string | null; // String
+      location?: string | null; // String
+      website?: string | null; // String
     }
   }
   Query: {

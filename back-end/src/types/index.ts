@@ -3,3 +3,7 @@ export * from "./Query";
 export * from "./Mutation";
 export * from "./User";
 export * from "./Profile";
+export * from "./Tweet";
+export * from "./Comment";
+export * from "./Following";
+export * from "./LikedTweet";

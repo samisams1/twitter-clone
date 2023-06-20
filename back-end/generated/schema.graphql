@@ -7,13 +7,39 @@ type AuthPayload {
   user: User
 }
 
+type Comment {
+  User: [User]
+  content: String
+  id: ID
+}
+
+type Following {
+  Following: [Following]
+  avator: String
+  id: ID
+  name: String
+}
+
+type LikedTweet {
+  Tweet: [Tweet]
+  id: ID
+}
+
 type Mutation {
+  createComment: Comment
   createDraft(body: String, title: String): Post
   createProfile(avatar: String, bio: String, location: String, website: String): Profile
+  createReply: Comment
+  createTweet(content: String): Tweet
+  deleteFollow: Following
+  deleteLike: LikedTweet
   deletePost(id: String): Post
+  follow: Following
+  likeTweet: LikedTweet
   login(email: String, password: String): AuthPayload
   signup(email: String, name: String, password: String): AuthPayload
   updatePost(id: String): Post
+  updateProfile(avatar: String, bio: String, location: String, website: String): Profile
 }
 
 type Post {
@@ -34,11 +60,24 @@ type Query {
   me: User
   post(id: ID): Post
   posts: [Post]
+  tweet: Tweet
+  tweets: [Tweet]
+  user: User
   users: [User]
 }
 
+type Tweet {
+  LikedTweet: [LikedTweet]
+  content: String
+  id: ID
+}
+
 type User {
+  Comment: [Comment]
+  Following: [Following]
+  LikedTweet: [LikedTweet]
   Profile: [Profile]
+  Tweet: [Tweet]
   email: String
   id: ID
   name: String

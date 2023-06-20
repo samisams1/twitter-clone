@@ -58,7 +58,7 @@ model Following {
 model Profile {
   id        Int      @id @default(autoincrement())
   createdAt DateTime @default(now())
-  bio       String?
+  bio       String? 
   location  String?
   website   String?
   avatar    String?
