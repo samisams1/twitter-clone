@@ -129,6 +129,19 @@ export const Mutation = mutationType({
               })
             }
           })
+          t.field('createTweet', {
+            type: 'Tweet',
+            args: {
+              content: stringArg()
+            },
+            resolve: (_parent, { content }, ctx) => {
+              return prisma.tweet.create({
+                data: {
+                  content
+                },
+              })
+            },
+          });
           t.field("likeTweet", {
             type: "LikedTweet",
             args: {
