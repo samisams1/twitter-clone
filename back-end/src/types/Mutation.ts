@@ -3,6 +3,7 @@ import { PrismaClient } from "@prisma/client";
 import { compare, hash } from "bcryptjs";
 import { sign } from "jsonwebtoken"
 import { APP_SECRET, getUserId } from "../utils"
+import { LikedTweet } from "./LikedTweet";
 const prisma = new PrismaClient();
 export const Mutation = mutationType({
     definition(t){
@@ -132,9 +133,10 @@ export const Mutation = mutationType({
           t.field('createTweet', {
             type: 'Tweet',
             args: {
-              content: stringArg()
+              content: stringArg(),
+              LikedTweet:LikedTweet
             },
-            resolve: (_parent, { content }, ctx) => {
+            resolve: (_parent, { content,LikedTweet }, ctx) => {
               return prisma.tweet.create({
                 data: {
                   content
