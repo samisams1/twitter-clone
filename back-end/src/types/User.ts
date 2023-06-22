@@ -1,11 +1,11 @@
 import { PrismaClient } from "@prisma/client"
-import { objectType } from "@nexus/schema"
+const {objectType} = require('nexus')
 const prisma =  new PrismaClient()
 export const User = objectType({
 	name: "User",
 	definition(t) {
-		t.id('id')
-		t.string('name')
+		t.model.id()
+		t.model.name()
 		t.string('email')
 		t.list.field('Profile', { type: 'Profile',
 		resolve(parent, _args, ctx) {

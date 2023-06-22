@@ -69,8 +69,6 @@ export interface NexusGenObjects {
   }
   User: { // root type
     email?: string | null; // String
-    id?: string | null; // ID
-    name?: string | null; // String
   }
 }
 
@@ -114,7 +112,6 @@ export interface NexusGenFieldTypes {
     deleteLike: NexusGenRootTypes['LikedTweet'] | null; // LikedTweet
     deletePost: NexusGenRootTypes['Post'] | null; // Post
     follow: NexusGenRootTypes['Following'] | null; // Following
-    likeTweet: NexusGenRootTypes['LikedTweet'] | null; // LikedTweet
     login: NexusGenRootTypes['AuthPayload'] | null; // AuthPayload
     signup: NexusGenRootTypes['AuthPayload'] | null; // AuthPayload
     updatePost: NexusGenRootTypes['Post'] | null; // Post
@@ -153,8 +150,6 @@ export interface NexusGenFieldTypes {
     Profile: Array<NexusGenRootTypes['Profile'] | null> | null; // [Profile]
     Tweet: Array<NexusGenRootTypes['Tweet'] | null> | null; // [Tweet]
     email: string | null; // String
-    id: string | null; // ID
-    name: string | null; // String
   }
 }
 
@@ -188,7 +183,6 @@ export interface NexusGenFieldTypeNames {
     deleteLike: 'LikedTweet'
     deletePost: 'Post'
     follow: 'Following'
-    likeTweet: 'LikedTweet'
     login: 'AuthPayload'
     signup: 'AuthPayload'
     updatePost: 'Post'
@@ -227,13 +221,14 @@ export interface NexusGenFieldTypeNames {
     Profile: 'Profile'
     Tweet: 'Tweet'
     email: 'String'
-    id: 'ID'
-    name: 'String'
   }
 }
 
 export interface NexusGenArgTypes {
   Mutation: {
+    createComment: { // args
+      content?: string | null; // String
+    }
     createDraft: { // args
       body?: string | null; // String
       title?: string | null; // String

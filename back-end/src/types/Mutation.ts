@@ -3,7 +3,7 @@ import { PrismaClient } from "@prisma/client";
 import { compare, hash } from "bcryptjs";
 import { sign } from "jsonwebtoken"
 import { APP_SECRET, getUserId } from "../utils"
-import { LikedTweet } from "./LikedTweet";
+//import { LikedTweet } from "./LikedTweet";
 const prisma = new PrismaClient();
 export const Mutation = mutationType({
     definition(t){
@@ -134,7 +134,7 @@ export const Mutation = mutationType({
             type: 'Tweet',
             args: {
               content: stringArg(),
-              LikedTweet:LikedTweet
+              //LikedTweet:LikedTweet
             },
             resolve: (_parent, { content,LikedTweet }, ctx) => {
               return prisma.tweet.create({
@@ -144,7 +144,7 @@ export const Mutation = mutationType({
               })
             },
           });
-          t.field("likeTweet", {
+        /*  t.field("likeTweet", {
             type: "LikedTweet",
             args: {
             //  id: intArg()
@@ -159,7 +159,7 @@ export const Mutation = mutationType({
                 }
               })
             }
-          })
+          })*/
           t.field("deleteLike", {
             type: "LikedTweet",
             args: {
@@ -176,17 +176,17 @@ export const Mutation = mutationType({
           t.field("createComment", {
             type: "Comment",
             args: {
-            //  content: stringArg({ nullable: false }),
+             content: stringArg(),
               //id: intArg({ nullable: false })
             },
             resolve: (parent, { content, id }, ctx) => {
-              const userId = getUserId(ctx)
-              if (!userId) throw new Error("Could not authenticate user.")
+            //  const userId = getUserId(ctx)
+             // if (!userId) throw new Error("Could not authenticate user.")
               return ctx.prisma.comment.create({
                 data: {
                   content,
-                  User: { connect: { id: Number(userId) } },
-                  Tweet: { connect: { id: Number(id) } }
+                //  User: { connect: { id: Number(userId) } },
+                  // Tweet: { connect: { id: Number(id) } }
                 }
               })
             }

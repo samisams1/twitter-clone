@@ -1,12 +1,13 @@
 
-//const {objectType} = require('nexus')
+const {objectType} = require('nexus')
 
-import { objectType } from "nexus"
+//import { objectType } from "nexus"
 
   
 export const Profile = objectType({
   name: 'Profile',
   definition(t) {
+
    t.id('id')
    t.string('bio')
    t.string('loaction')

@@ -26,7 +26,7 @@ type LikedTweet {
 }
 
 type Mutation {
-  createComment: Comment
+  createComment(content: String): Comment
   createDraft(body: String, title: String): Post
   createProfile(avatar: String, bio: String, location: String, website: String): Profile
   createReply: Comment
@@ -35,7 +35,6 @@ type Mutation {
   deleteLike: LikedTweet
   deletePost(id: String): Post
   follow: Following
-  likeTweet: LikedTweet
   login(email: String, password: String): AuthPayload
   signup(email: String, name: String, password: String): AuthPayload
   updatePost(id: String): Post
@@ -79,6 +78,4 @@ type User {
   Profile: [Profile]
   Tweet: [Tweet]
   email: String
-  id: ID
-  name: String
 }
