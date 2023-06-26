@@ -1,4 +1,4 @@
-import { idArg, list, mutationType, stringArg } from "@nexus/schema";
+import { idArg, intArg, list, mutationType, stringArg } from "@nexus/schema";
 import { PrismaClient } from "@prisma/client";
 import { compare, hash } from "bcryptjs";
 import { sign } from "jsonwebtoken"
@@ -114,32 +114,36 @@ export const Mutation = mutationType({
               })
             }
           })
-          t.field("createTweet", {
+         /* t.field("createTweet", {
             type: "Tweet",
             args: {
-              content: stringArg()
+              content: stringArg(),
+              authorId:intArg()
             },
-            resolve: (parent, { content }, ctx) => {
-              const userId = getUserId(ctx)
+            resolve: (parent, { content,authorId }, ctx) => {
+              const userId = 1
               if (!userId) throw new Error("Could not authenticate user.")
-              return ctx.prisma.tweet.create({
+              return prisma.tweet.create({
                 data: {
                   content,
+                  authorId,
                   author: { connect: { id: Number(userId) } }
                 }
               })
             }
-          })
+          })*/
           t.field('createTweet', {
             type: 'Tweet',
             args: {
               content: stringArg(),
+              authorId:intArg()
               //LikedTweet:LikedTweet
             },
-            resolve: (_parent, { content,LikedTweet }, ctx) => {
+            resolve: (_parent, { content,authorId }, ctx) => {
               return prisma.tweet.create({
                 data: {
-                  content
+                  content,
+                  authorId
                 },
               })
             },
@@ -177,6 +181,7 @@ export const Mutation = mutationType({
             type: "Comment",
             args: {
              content: stringArg(),
+             user:stringArg()
               //id: intArg({ nullable: false })
             },
             resolve: (parent, { content, id }, ctx) => {

@@ -64,11 +64,14 @@ export interface NexusGenObjects {
   }
   Query: {};
   Tweet: { // root type
+    authorId?: number | null; // Int
     content?: string | null; // String
     id?: string | null; // ID
   }
   User: { // root type
     email?: string | null; // String
+    id?: string | null; // String
+    name?: string | null; // String
   }
 }
 
@@ -140,6 +143,8 @@ export interface NexusGenFieldTypes {
   }
   Tweet: { // field return type
     LikedTweet: Array<NexusGenRootTypes['LikedTweet'] | null> | null; // [LikedTweet]
+    author: Array<NexusGenRootTypes['User'] | null> | null; // [User]
+    authorId: number | null; // Int
     content: string | null; // String
     id: string | null; // ID
   }
@@ -150,6 +155,8 @@ export interface NexusGenFieldTypes {
     Profile: Array<NexusGenRootTypes['Profile'] | null> | null; // [Profile]
     Tweet: Array<NexusGenRootTypes['Tweet'] | null> | null; // [Tweet]
     email: string | null; // String
+    id: string | null; // String
+    name: string | null; // String
   }
 }
 
@@ -211,6 +218,8 @@ export interface NexusGenFieldTypeNames {
   }
   Tweet: { // field return type name
     LikedTweet: 'LikedTweet'
+    author: 'User'
+    authorId: 'Int'
     content: 'String'
     id: 'ID'
   }
@@ -221,6 +230,8 @@ export interface NexusGenFieldTypeNames {
     Profile: 'Profile'
     Tweet: 'Tweet'
     email: 'String'
+    id: 'String'
+    name: 'String'
   }
 }
 
@@ -228,6 +239,7 @@ export interface NexusGenArgTypes {
   Mutation: {
     createComment: { // args
       content?: string | null; // String
+      user?: string | null; // String
     }
     createDraft: { // args
       body?: string | null; // String
@@ -240,6 +252,7 @@ export interface NexusGenArgTypes {
       website?: string | null; // String
     }
     createTweet: { // args
+      authorId?: number | null; // Int
       content?: string | null; // String
     }
     deletePost: { // args

@@ -26,11 +26,11 @@ type LikedTweet {
 }
 
 type Mutation {
-  createComment(content: String): Comment
+  createComment(content: String, user: String): Comment
   createDraft(body: String, title: String): Post
   createProfile(avatar: String, bio: String, location: String, website: String): Profile
   createReply: Comment
-  createTweet(content: String): Tweet
+  createTweet(authorId: Int, content: String): Tweet
   deleteFollow: Following
   deleteLike: LikedTweet
   deletePost(id: String): Post
@@ -67,6 +67,8 @@ type Query {
 
 type Tweet {
   LikedTweet: [LikedTweet]
+  author: [User]
+  authorId: Int
   content: String
   id: ID
 }
@@ -78,4 +80,6 @@ type User {
   Profile: [Profile]
   Tweet: [Tweet]
   email: String
+  id: String
+  name: String
 }

@@ -4,8 +4,8 @@ const prisma =  new PrismaClient()
 export const User = objectType({
 	name: "User",
 	definition(t) {
-		t.model.id()
-		t.model.name()
+		t.string('id')
+		t.string('name')
 		t.string('email')
 		t.list.field('Profile', { type: 'Profile',
 		resolve(parent, _args, ctx) {

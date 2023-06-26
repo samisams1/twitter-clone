@@ -7,6 +7,7 @@ export const Tweet = objectType({
 	definition(t) {
 		t.id('id')
 		t.string('content')
+		t.int('authorId')
 		t.list.field('LikedTweet', { type: 'LikedTweet',
 		resolve(_parent, _args, ctx) {
 				return prisma.likedTweet.findMany({
@@ -16,8 +17,18 @@ export const Tweet = objectType({
 				})
 			  }, 
 		
-		})
-
+		});
+		t.list.field('author', { type: 'User',
+		resolve(_parent, _args, ctx) {
+				return prisma.user.findMany({
+				  where: {
+					id:1,
+				  },
+				})
+			  }, 
+		
+		});
+    
 
 	}
 })
