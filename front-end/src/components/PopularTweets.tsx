@@ -5,7 +5,7 @@ interface Props {
 const PopularTweets = () => {
     return (  
         <>
-        PopularTweets
+        PopularTweets from samisams
         </>
     );
 }

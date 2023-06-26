@@ -1,26 +1,27 @@
-import { gql, useQuery } from "@apollo/client"
+ import { gql, useQuery } from "@apollo/client"
 import React from "react"
 import { useNavigate } from "react-router-dom"
+import AllTweets from "../components/AllTweets"
 import HomPageTweet from "../components/HomePageTweet"
-//import AllTweets from "../components/AllTweets"
-//import HomPageTweet from "../components/HomePageTweet"
 import LeftNav from "../components/LeftNav"
 import PopularTweets from "../components/PopularTweets"
 import "../styles/home.css"
-//import "../styles/primary.css"
+import "../styles/primary.css"
 
 export const ME_QUERY = gql`
 query{
-    me {
-      id
-      name
-      Profile {
-        bio
-        website
-        avatar
-      }
+  me {
+    id
+    name
+    Profile {
+      bio
+      website
+      avatar
     }
-  }`
+  }
+}
+`
+
 
 function Home() {
   const history = useNavigate()
@@ -38,10 +39,10 @@ function Home() {
             <div className="home-header">
                 <h3 className="home-title">Home</h3>
             </div>
-               samisams
+                <HomPageTweet/>
+                <AllTweets/>
         </div>
         <div className="right">
-            <HomPageTweet/>
           <PopularTweets/>
         </div>
       </div>

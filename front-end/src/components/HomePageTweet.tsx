@@ -1,7 +1,7 @@
+import React from "react"
 import { useMutation } from "@apollo/client"
 import { ErrorMessage, Field, Form, Formik } from "formik"
 import gql from "graphql-tag"
-import React from "react"
 import * as Yup from "yup"
 import "../styles/tweet.css"
 import { TWEETS_QUERY } from "./AllTweets"

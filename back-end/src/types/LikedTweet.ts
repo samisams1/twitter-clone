@@ -6,6 +6,8 @@ export const LikedTweet = objectType({
 	name: "LikedTweet",
 	definition(t) {
 	    t.id('id')
+		t.string('content') 
+		t.string('createdAt') 
 		t.list.field('Tweet', { type: 'Tweet',
 		resolve(_parent, _args, ctx) {
 				return prisma.tweet.findMany({
@@ -16,6 +18,5 @@ export const LikedTweet = objectType({
 			  }, 
 		
 		})
-	
 	}
-})
+});

@@ -5,7 +5,7 @@ import React, { useState } from "react"
 import Modal from "react-modal"
 import * as Yup from "yup"
 import { ME_QUERY } from "../pages/Profile"
-//import { customStyles } from "../styles/tweet.css"
+import { customStyles } from "../styles/customStyles"
 
 const CREATE_TWEET_MUTATION = gql`
   mutation createTweet($content: String) {
@@ -57,7 +57,7 @@ export default function Tweet() {
         isOpen={modalIsOpen}
         onRequestClose={closeModal}
         contentLabel="Modal"
-       // style={customStyles}
+        style={customStyles}
       >
         <span className="exit" onClick={closeModal}>
           <i className="fa fa-times" aria-hidden="true"></i>

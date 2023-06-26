@@ -47,6 +47,8 @@ export interface NexusGenObjects {
     name?: string | null; // String
   }
   LikedTweet: { // root type
+    content?: string | null; // String
+    createdAt?: string | null; // String
     id?: string | null; // ID
   }
   Mutation: {};
@@ -66,6 +68,7 @@ export interface NexusGenObjects {
   Tweet: { // root type
     authorId?: number | null; // Int
     content?: string | null; // String
+    createdAt?: string | null; // String
     id?: string | null; // ID
   }
   User: { // root type
@@ -103,6 +106,8 @@ export interface NexusGenFieldTypes {
   }
   LikedTweet: { // field return type
     Tweet: Array<NexusGenRootTypes['Tweet'] | null> | null; // [Tweet]
+    content: string | null; // String
+    createdAt: string | null; // String
     id: string | null; // ID
   }
   Mutation: { // field return type
@@ -142,11 +147,13 @@ export interface NexusGenFieldTypes {
     users: Array<NexusGenRootTypes['User'] | null> | null; // [User]
   }
   Tweet: { // field return type
-    LikedTweet: Array<NexusGenRootTypes['LikedTweet'] | null> | null; // [LikedTweet]
     author: Array<NexusGenRootTypes['User'] | null> | null; // [User]
     authorId: number | null; // Int
+    comments: Array<NexusGenRootTypes['Comment'] | null> | null; // [Comment]
     content: string | null; // String
+    createdAt: string | null; // String
     id: string | null; // ID
+    likes: Array<NexusGenRootTypes['LikedTweet'] | null> | null; // [LikedTweet]
   }
   User: { // field return type
     Comment: Array<NexusGenRootTypes['Comment'] | null> | null; // [Comment]
@@ -178,6 +185,8 @@ export interface NexusGenFieldTypeNames {
   }
   LikedTweet: { // field return type name
     Tweet: 'Tweet'
+    content: 'String'
+    createdAt: 'String'
     id: 'ID'
   }
   Mutation: { // field return type name
@@ -217,11 +226,13 @@ export interface NexusGenFieldTypeNames {
     users: 'User'
   }
   Tweet: { // field return type name
-    LikedTweet: 'LikedTweet'
     author: 'User'
     authorId: 'Int'
+    comments: 'Comment'
     content: 'String'
+    createdAt: 'String'
     id: 'ID'
+    likes: 'LikedTweet'
   }
   User: { // field return type name
     Comment: 'Comment'

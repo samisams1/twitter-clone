@@ -20,6 +20,24 @@ query{
       website
       avatar
     }
+    LikedTweet {
+      id
+      content
+      createdAt
+      Tweet {
+        id
+        content
+        createdAt
+        author {
+          id
+          name
+          Profile {
+            id
+            avatar
+          }
+        }
+      }
+    }
   }
 }
 `

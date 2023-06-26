@@ -143,7 +143,7 @@ export const Mutation = mutationType({
               return prisma.tweet.create({
                 data: {
                   content,
-                  authorId
+                  authorId:1
                 },
               })
             },
